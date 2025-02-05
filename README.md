@@ -10,3 +10,10 @@ Utilized Packages from Unity Packet Manager:
 Input System
 Cinemachine 
 TextMeshPRO
+
+Utilized Resources:
+https://assetstore.unity.com/packages/3d/environments/landscapes/rpg-poly-pack-lite-148410
+https://www.mixamo.com/#/?page=1&query=Josh&type=Character
+https://www.mixamo.com/#/?page=1&query=Locomotion&type=Motion%2CMotionPack
+https://www.mixamo.com/#/?page=1&query=Reloading&type=Motion%2CMotionPack
+https://assetstore.unity.com/packages/3d/props/guns/free-fps-weapon-akm-180663
