@@ -21,7 +21,7 @@ public class ObjectDamage : MonoBehaviour
         
     }
 
-    public void ObjectHit(float amount)
+    public void ObjectHitDamage(float amount)
     {
         health -= amount;
         if (health <= 0f)

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,6 +15,10 @@ public class PlayerMovement : MonoBehaviour
     private float turnVelocity;
     private bool isSprinting;
 
+    private float playerHealth = 100f;
+    public float currentHP;
+
+
     //To Manage Jump/gravity
     public float gravity = -9.81f;
     public float JumpRange = 1f;
@@ -28,7 +31,8 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.Locked;
+        currentHP = playerHealth;
     }
 
     // Update is called once per frame
@@ -113,4 +117,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void PlayerHitDamage(float amount)
+    {
+        currentHP -= amount;
+        if(currentHP<=0)
+        {
+            PlayerDie();
+        }
+    }
+    private void PlayerDie()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Object.Destroy(gameObject,1.0f);//destroys after 1f time
+    }
 }

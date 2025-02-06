@@ -25,12 +25,12 @@ public class Rifle : MonoBehaviour
     //Effects(HitEffect/FireEffect)
     public ParticleSystem MuzzleFlash;
     public GameObject WoodImpact;//Testing
+    public GameObject goreEffect;
 
     // Start is called before the first frame update
     void Start()
     {
         presentAmmo = maxAmmo;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -95,11 +95,19 @@ public class Rifle : MonoBehaviour
             Debug.Log(HitInfo.transform.name);
 
             ObjectDamage objectDamage = HitInfo.transform.GetComponent<ObjectDamage>();
-            if(objectDamage!=null)
+            Zombie zScript= HitInfo.transform.GetComponent<Zombie>();
+
+            if (objectDamage!=null)
             {
-                objectDamage.ObjectHit(Damage);
-                GameObject Impact = Instantiate(WoodImpact, HitInfo.point,Quaternion.LookRotation(HitInfo.normal));
-                Destroy(Impact, 1f);
+                objectDamage.ObjectHitDamage(Damage);
+                GameObject WoodEffectPlay = Instantiate(WoodImpact, HitInfo.point,Quaternion.LookRotation(HitInfo.normal));
+                Destroy(WoodEffectPlay, 1f);
+            }
+            if (zScript != null)
+            {
+                zScript.ZombieHitDamage(Damage);
+                GameObject goreEffectPlay = Instantiate(goreEffect, HitInfo.point, Quaternion.LookRotation(HitInfo.normal));
+                Destroy(goreEffectPlay, 1f);
             }
         }
     }
