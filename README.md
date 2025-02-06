@@ -17,3 +17,4 @@ https://www.mixamo.com/#/?page=1&query=Josh&type=Character
 https://www.mixamo.com/#/?page=1&query=Locomotion&type=Motion%2CMotionPack
 https://www.mixamo.com/#/?page=1&query=Reloading&type=Motion%2CMotionPack
 https://assetstore.unity.com/packages/3d/props/guns/free-fps-weapon-akm-180663
+https://assetstore.unity.com/packages/vfx/particles/war-fx-5669#releases
