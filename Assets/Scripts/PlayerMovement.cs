@@ -1,12 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public TextMeshProUGUI HealthText;
     public CharacterController CC;
     public Animator animator;
     public Transform playerCamera;
+    public GameObject playerDamage;
+    private float damageDisplayTimer;
+    private bool damaged = false;
+    
 
 
     public float PlayerSpeed = 3.3f;
@@ -33,11 +39,20 @@ public class PlayerMovement : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         currentHP = playerHealth;
+        SetHealthText();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(damaged)
+        {
+            if(Time.time>=damageDisplayTimer)
+            {
+                damaged = false;
+                playerDamage.SetActive(false);
+            }
+        }
         onSurface = Physics.CheckSphere(SurfaceCheck.position, surfaceDistance, surfaceMask);
         if(onSurface&&Velocity.y<0)
         {
@@ -119,6 +134,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerHitDamage(float amount)
     {
+        SetHealthText();
+        playerDamage.SetActive(true);
+        damaged = true;
+        damageDisplayTimer = Time.time + 1f;
         currentHP -= amount;
         if(currentHP<=0)
         {
@@ -129,5 +148,9 @@ public class PlayerMovement : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Object.Destroy(gameObject,1.0f);//destroys after 1f time
+    }
+    void SetHealthText()
+    {
+        HealthText.text = "Health:" + currentHP.ToString();
     }
 }

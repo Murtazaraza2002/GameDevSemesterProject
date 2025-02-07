@@ -9,7 +9,7 @@ public class Zombie : MonoBehaviour
     public Camera AttackingRayCastArea;
     public Animator anim;
 
-    private float ZombieHealth = 100f;
+    private float ZombieHealth = 30f;
     private float ZombieHP;
     public float zombieDamage = 5f;
 
@@ -23,7 +23,18 @@ public class Zombie : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         ZombieHP = ZombieHealth;
+        if (player == null)
+        {
+            // Find the player by tag 
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+
+        if (player == null)
+        {
+            Debug.LogError("Player Transform not assigned and could not be found in the scene.");
+        }
     }
+
 
     void Update()
     {

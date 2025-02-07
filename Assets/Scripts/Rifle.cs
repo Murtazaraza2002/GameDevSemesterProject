@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Rifle : MonoBehaviour
 {
     public Camera cam;
+    public TextMeshProUGUI AmmoText;
+    public TextMeshProUGUI MagText;
 
 
     public float Damage = 10f;
     public float ShootRange = 100f;
-    public float fireCharge = 15f;
+    public float FireDelay = 0.3f;
     private float nextTimeToShoot = 0f;
     public Animator animator;
     public PlayerMovement pScript;
@@ -31,6 +34,7 @@ public class Rifle : MonoBehaviour
     void Start()
     {
         presentAmmo = maxAmmo;
+        SetAmmoText();
     }
 
     // Update is called once per frame
@@ -41,10 +45,8 @@ public class Rifle : MonoBehaviour
             return;
         }
 
-        if(presentAmmo<=0)
+        if (presentAmmo <= 0 && mag > 0 && !setReloading)
         {
-            if (mag <= 0)
-                return;
             StartCoroutine(Reload());
         }
 
@@ -53,7 +55,7 @@ public class Rifle : MonoBehaviour
             animator.SetBool("Fire", true);
             animator.SetBool("Idle", false);
 
-            nextTimeToShoot = Time.time + 1f / fireCharge;
+            nextTimeToShoot = Time.time +  FireDelay;
             Shoot();
         }
         else if(Input.GetButton("Fire1")&&Input.GetKey(KeyCode.W))
@@ -67,7 +69,7 @@ public class Rifle : MonoBehaviour
             animator.SetBool("IdleAim", true);
             animator.SetBool("FireWalk", true);
             animator.SetBool("Walk", true);
-            animator.SetBool("Reloading", true);
+            animator.SetBool("Reloading", false);
         }
         else
         {
@@ -86,6 +88,7 @@ public class Rifle : MonoBehaviour
             return;
         }
         presentAmmo--;
+        SetAmmoText();
 
         MuzzleFlash.Play();
         RaycastHit HitInfo;
@@ -116,17 +119,24 @@ public class Rifle : MonoBehaviour
     {
         pScript.PlayerSpeed = 0f;
         pScript.PlayerSprint = 0f;
+        animator.SetBool("Idle", true);
+        animator.SetBool("Walk", false);
         setReloading = true;
         Debug.Log("Reloading...");
         animator.SetBool("Reloading", true);
         //need animation + sound effect
         yield return new WaitForSeconds(reloadingTime);
         animator.SetBool("Reloading",false);
+        setReloading = false;
         mag--;
         presentAmmo = maxAmmo;
         pScript.PlayerSpeed = 3.3f;
         pScript.PlayerSprint = 5f;
-        setReloading = false;
     }
 
+    void SetAmmoText()
+    {
+        AmmoText.text = "Ammo:" + presentAmmo.ToString();
+        MagText.text = "Magazines:" + mag.ToString();
+    }
 }
