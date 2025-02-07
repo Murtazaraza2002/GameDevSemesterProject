@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public TextMeshProUGUI GameOverText;
     public TextMeshProUGUI HealthText;
     public CharacterController CC;
     public Animator animator;
@@ -38,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameOverText.gameObject.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         currentHP = playerHealth;
         SetHealthText();
@@ -159,6 +161,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void PlayerDie()
     {
+        GameOverText.gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Object.Destroy(gameObject,1.0f);//destroys after 1f time
     }

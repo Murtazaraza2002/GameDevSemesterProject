@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using UnityEditor.Build;
 using UnityEngine;
-
+using TMPro;
 public class Zombie : MonoBehaviour
 {
     public Transform player;
@@ -39,6 +39,10 @@ public class Zombie : MonoBehaviour
     void Update()
     {
         if(ZombieHP<=0)
+        {
+            return;
+        }
+        if(player==null)
         {
             return;
         }
