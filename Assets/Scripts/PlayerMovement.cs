@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -45,7 +46,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(damaged)
+        //return to main menu:
+
+        if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.Escape))
+        {
+            Debug.Log("Returning to Main Menu...");
+            Invoke("DelayedAction", 2f);
+        }
+        if (damaged)
         {
             if(Time.time>=damageDisplayTimer)
             {
@@ -72,6 +80,11 @@ public class PlayerMovement : MonoBehaviour
 
         PlayerMove();
         Jump();
+    }
+    private void DelayedAction()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        SceneManager.LoadScene("MainMenu");
     }
 
     void PlayerMove()
